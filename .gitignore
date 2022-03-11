@@ -1,0 +1,10 @@
+# Logs.
+logs
+*.log
+
+# Environment configs.
+.env
+
+# Dirs.
+node_modules/
+frontend/node_modules

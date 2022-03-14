@@ -126,6 +126,36 @@ const insertNewMemberData = async (
   return memberData;
 };
 
+const isFriends = async (friend1, friend2) => {
+  var friend1Friends = [];
+  friend1.friendList.forEach((f) => {
+    friend1Friends.push(`${f._id}`);
+  });
+
+  if (friend1Friends.includes(`${friend2._id}`)) {
+    return true;
+  }
+  return false;
+};
+
+const makeFriends = async (friend1, friend2) => {
+  try {
+    const session = await mongoose.startSession();
+    await session.withTransaction(async () => {
+      friend1.friendList.push(friend2);
+      friend2.friendList.push(friend1);
+      await friend1.save({ session });
+      await friend2.save({ session });
+    });
+    session.endSession();
+  } catch (err) {
+    return false;
+  }
+  return true;
+};
+
 module.exports.shortenURL = shortenURL;
 module.exports.scrapeWebsiteForHeadings = scrapeWebsiteForHeadings;
 module.exports.insertNewMemberData = insertNewMemberData;
+module.exports.isFriends = isFriends;
+module.exports.makeFriends = makeFriends;

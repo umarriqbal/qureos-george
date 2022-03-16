@@ -50,7 +50,7 @@ const addFriendController = async (req, res) => {
   }
 
   return res.status(200).send({
-    success: false,
+    success: true,
     data: {
       message: `${friend1.name} and ${friend2.name} are now friends.`,
     },

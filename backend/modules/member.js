@@ -154,8 +154,61 @@ const makeFriends = async (friend1, friend2) => {
   return true;
 };
 
+const getMembersFromToken = async (token) => {
+  var memberIds = [];
+  const tokenObjs = await WebsiteToken.find({
+    headingToken: token,
+  }).populate("writer");
+  tokenObjs.forEach((token) => {
+    token.writer.forEach((writer) => {
+      if (!memberIds.includes(`${writer._id}`)) {
+        memberIds.push(`${writer._id}`);
+      }
+    });
+  });
+  return memberIds;
+};
+
+const getMembersWithName = async (nameToken) => {
+  var memberIds = [];
+  const memberObjs = await Member.find({
+    name: { $regex: `^${nameToken}`, $options: "i" },
+  });
+  memberObjs.forEach((memberObj) => {
+    if (!memberIds.includes(`${memberObj._id}`)) {
+      memberIds.push(`${memberObj._id}`);
+    }
+  });
+  return memberIds;
+};
+
+const getFilterParams = async (queryParams) => {
+  var filterIds = [];
+
+  if (queryParams.memberId) {
+    filterIds.push(queryParams.memberId);
+  }
+
+  if (queryParams.token) {
+    const tokenMemberIds = await getMembersFromToken(queryParams.token);
+    if (tokenMemberIds) {
+      filterIds.push(...tokenMemberIds);
+    }
+  }
+
+  if (queryParams.nameToken) {
+    const nameMemberIds = await getMembersWithName(queryParams.nameToken);
+    if (nameMemberIds) {
+      filterIds.push(...nameMemberIds);
+    }
+  }
+
+  return filterIds;
+};
+
 module.exports.shortenURL = shortenURL;
 module.exports.scrapeWebsiteForHeadings = scrapeWebsiteForHeadings;
 module.exports.insertNewMemberData = insertNewMemberData;
 module.exports.isFriends = isFriends;
 module.exports.makeFriends = makeFriends;
+module.exports.getFilterParams = getFilterParams;

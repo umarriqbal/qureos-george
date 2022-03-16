@@ -109,18 +109,20 @@ const insertNewMemberData = async (
           session: session,
         }
       );
-      if (tokensInserted) {
+      if (tokensInserted.acknowledged === true) {
         const memberObj = await Member.create([memberData], {
           session: session,
         });
         if (!memberObj) {
           throw "Something went wrong while inserting member!";
         }
+      } else {
+        throw "Something went wrong while inserting documents for member!";
       }
-      throw "Something went wrong while inserting documents for member!";
     });
     session.endSession();
   } catch (err) {
+    console.log(err);
     return false;
   }
   return memberData;
@@ -211,4 +213,5 @@ module.exports.scrapeWebsiteForHeadings = scrapeWebsiteForHeadings;
 module.exports.insertNewMemberData = insertNewMemberData;
 module.exports.isFriends = isFriends;
 module.exports.makeFriends = makeFriends;
+module.exports.getMembersFromToken = getMembersFromToken;
 module.exports.getFilterParams = getFilterParams;

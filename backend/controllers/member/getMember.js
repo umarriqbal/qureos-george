@@ -35,17 +35,13 @@ const getMemberController = async (req, res) => {
   if (value.getOne === true) {
     return res.status(200).send({
       success: true,
-      data: {
-        member: memberObjs[0],
-      },
+      data: memberObjs[0],
     });
   }
 
   return res.status(200).send({
     success: true,
-    data: {
-      members: memberObjs,
-    },
+    data: memberObjs,
   });
 };
 module.exports = getMemberController;

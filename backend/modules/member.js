@@ -28,7 +28,7 @@ const postprocessHeading = (inputHeading) => {
   return inputHeading.replace(/[^\w\s]|_/g, "");
 };
 
-const tokenizeHeading = async (inputHeading) => {
+const tokenizeHeading = (inputHeading) => {
   // This function is used to preprocess headings data including removing stop words and
   // tokenizing for better search results.
   try {
@@ -55,8 +55,8 @@ const scrapeWebsiteForHeadings = async (website) => {
 
     for (idx in pageHeadings) {
       const heading = pageHeadings[idx];
-      const headingText = await preprocessHeading(heading);
-      const headingTokens = await tokenizeHeading(headingText);
+      const headingText = preprocessHeading(heading);
+      const headingTokens = tokenizeHeading(headingText);
       if (!allHeadings.includes(headingText)) {
         allHeadings.push(headingText);
         allTokens[headingText] = headingTokens;
@@ -209,6 +209,9 @@ const getFilterParams = async (queryParams) => {
 };
 
 module.exports.shortenURL = shortenURL;
+module.exports.preprocessHeading = preprocessHeading;
+module.exports.postprocessHeading = postprocessHeading;
+module.exports.tokenizeHeading = tokenizeHeading;
 module.exports.scrapeWebsiteForHeadings = scrapeWebsiteForHeadings;
 module.exports.insertNewMemberData = insertNewMemberData;
 module.exports.isFriends = isFriends;

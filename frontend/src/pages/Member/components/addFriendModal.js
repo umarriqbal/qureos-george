@@ -67,7 +67,7 @@ class AddFriendModal extends Component {
           ></QureosSearchBar>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={this.closeModal}>
+          <Button variant="secondary" onClick={this.hideModalHandler}>
             Cancel
           </Button>
           <Button

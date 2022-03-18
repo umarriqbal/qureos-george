@@ -44,7 +44,7 @@ class AddMemberModal extends Component {
       this.setState({
         modal: false,
         formValidated: false,
-        addBtn: false,
+        addBtn: true,
         spinner: false,
       });
     }

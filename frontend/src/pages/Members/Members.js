@@ -90,10 +90,19 @@ class MembersPage extends Component {
         </>
       );
     } else if (this.state.members.length === 0) {
-      <Alert variant="warning">
-        <p>No members added yet.</p>
-      </Alert>;
-      <ActionCard actions={this.actions} />;
+      return (
+        <>
+          <Alert variant="warning">
+            <p>No members added yet.</p>
+          </Alert>
+          <ActionCard actions={this.actions} />
+          <br />
+          <AddMemberModal
+            submitAction={this.addMemberHandler}
+            ref={this.addMemberModal}
+          />
+        </>
+      );
     } else {
       return (
         <>

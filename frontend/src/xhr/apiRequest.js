@@ -36,7 +36,7 @@ const createMember = async (memberData) => {
 };
 
 const getSearchTokens = async (token) => {
-  return await doGet(`/api/autosuggestions/${token}`);
+  return await doGet(`/api/search/autosuggestions/${token}`);
 };
 
 const getMember = async (memberId) => {

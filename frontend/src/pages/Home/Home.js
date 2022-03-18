@@ -35,7 +35,6 @@ class HomePage extends Component {
   }
 
   async addMember(memberData) {
-    console.log(memberData);
     const apiResponse = await createMember(memberData);
     if (apiResponse.success === true) {
       this.setState({

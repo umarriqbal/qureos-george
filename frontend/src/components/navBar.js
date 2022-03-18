@@ -2,12 +2,17 @@ import { Component } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Navbar, Container, Nav } from "react-bootstrap";
-// import QureosSearchBar from "./searchBar";
+import QureosSearchBar from "./searchBar";
 
 class QureosNavBar extends Component {
   constructor(props) {
     super(props);
     this.navigate = props.navigate;
+    this.queryClickHandler = this.handleQuery.bind(this);
+  }
+
+  handleQuery(query) {
+    console.log(query);
   }
 
   render() {
@@ -25,12 +30,12 @@ class QureosNavBar extends Component {
                 <Nav.Link href="/">Home</Nav.Link>
                 <Nav.Link href="/members">Members</Nav.Link>
               </Nav>
-              {/* <QureosSearchBar
+              <QureosSearchBar
                 searchBarId="mainSearchBar"
                 isToken={true}
                 keyFormat="name"
-                getSearchItemCallBack={}
-              ></QureosSearchBar> */}
+                getSearchItemCallBack={this.queryClickHandler}
+              ></QureosSearchBar>
             </Navbar.Collapse>
           </Container>
         </Navbar>

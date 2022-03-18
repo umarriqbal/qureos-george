@@ -30,7 +30,6 @@ class QureosSearchBar extends Component {
       searchResults = await getFilteredMembers({ nameToken: query });
     }
     if (searchResults.success === true) {
-      console.log(searchResults);
       this.setState({ isLoading: false, options: searchResults.data });
     } else {
       this.setState({ isLoading: false });

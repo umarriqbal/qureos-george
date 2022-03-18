@@ -13,7 +13,6 @@ const getMemberController = async (req, res) => {
       },
     });
   }
-
   const filterIds = await getFilterParams(value);
   const memberObjs = await getMembers(filterIds);
 

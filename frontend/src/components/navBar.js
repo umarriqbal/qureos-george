@@ -12,7 +12,8 @@ class QureosNavBar extends Component {
   }
 
   handleQuery(query) {
-    console.log(query);
+    this.navigate(`/token/?token=${query[0]}`);
+    window.location.reload(false);
   }
 
   render() {

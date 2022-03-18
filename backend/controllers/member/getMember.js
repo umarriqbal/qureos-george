@@ -1,6 +1,6 @@
 const Member = require("../../models/Member");
 const getMemberValidator = require("../../validators/getMember");
-const { getFilterParams } = require("../../modules/member");
+const { getFilterParams, getMembers } = require("../../modules/member");
 
 const getMemberController = async (req, res) => {
   const { value, error } = getMemberValidator(req.query);
@@ -14,14 +14,8 @@ const getMemberController = async (req, res) => {
     });
   }
 
-  var memberObjs = [];
   const filterIds = await getFilterParams(value);
-
-  if (filterIds.length === 0) {
-    memberObjs = await Member.find();
-  } else {
-    memberObjs = await Member.find({ _id: filterIds });
-  }
+  const memberObjs = await getMembers(filterIds);
 
   if (!memberObjs) {
     return res.status(404).send({

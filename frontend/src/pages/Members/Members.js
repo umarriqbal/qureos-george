@@ -30,7 +30,6 @@ class MembersPage extends Component {
   }
   async getMembers() {
     const apiResponse = await getAllMembers();
-    console.log(apiResponse);
     if (apiResponse.success === true) {
       this.setState({ members: apiResponse.data, dataLoaded: true });
     } else {
@@ -48,11 +47,12 @@ class MembersPage extends Component {
   async addMember(memberData) {
     const apiResponse = await createMember(memberData);
     if (apiResponse.success === true) {
-      this.reload({
-        isAlert: true,
-        type: "success",
-        msg: `${apiResponse.data.name} successfully added.`,
+      this.setState({
+        alert: true,
+        alertVariant: "success",
+        alertMessage: `${apiResponse.data.name} successfully added.`,
       });
+      await this.reload();
       return true;
     } else {
       this.setState({
@@ -63,13 +63,7 @@ class MembersPage extends Component {
       return false;
     }
   }
-  async reload(alertInfo) {
-    this.setState({
-      dataLoaded: false,
-      alert: alertInfo.isAlert,
-      alertVariant: alertInfo.type,
-      alertMessage: alertInfo.type,
-    });
+  async reload() {
     await this.getMembersHandler();
   }
   render(props) {

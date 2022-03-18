@@ -1,9 +1,10 @@
 import { Table, Button } from "react-bootstrap";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function MembersList(props) {
+  const navigate = useNavigate();
   const viewMember = (e) => {
-    console.log(e.target.value);
+    navigate(`/member/${e.target.value}`);
   };
   if (props.memberItems.length > 0) {
     return (

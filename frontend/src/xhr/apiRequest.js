@@ -40,7 +40,7 @@ const getSearchTokens = async (token) => {
 };
 
 const getMember = async (memberId) => {
-  const toGetURL = `/api/member/${memberId}`;
+  const toGetURL = `/api/member/?memberId=${memberId}&getOne=true`;
   return await doGet(toGetURL);
 };
 

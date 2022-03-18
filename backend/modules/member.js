@@ -5,6 +5,7 @@ const cheerio = require("cheerio");
 const WebsiteToken = require("../models/WebsiteToken");
 const Member = require("../models/Member");
 const mongoose = require("mongoose");
+const { modelName } = require("../models/WebsiteToken");
 
 const shortenURL = async (website) => {
   var tinyURLMaker = new prettyLink.TinyURL();
@@ -208,6 +209,43 @@ const getFilterParams = async (queryParams) => {
   return filterIds;
 };
 
+const getMembers = async (ids) => {
+  var memberObjs = [];
+  var membersList = [];
+
+  if (ids.length === 0) {
+    memberObjs = await Member.find().populate("friends");
+  } else {
+    memberObjs = await Member.find({ _id: ids }).populate("friends");
+  }
+
+  for (memberIdx in memberObjs) {
+    const memberObj = memberObjs[memberIdx];
+    var memberInfo = {
+      _id: memberObj._id,
+      id: memberObj._id,
+      name: memberObj.name,
+      website: memberObj.website,
+      websiteHeadings: memberObj.websiteHeadings,
+      websiteShort: memberObj.websiteShort,
+      friends: [],
+    };
+    if (memberObj.friendList.length > 0) {
+      const memberFriends = await Member.find({ _id: memberObj.friendList });
+      if (memberFriends) {
+        memberFriends.forEach((friend) => {
+          memberInfo.friends.push({
+            id: friend._id,
+            name: friend.name,
+          });
+        });
+      }
+    }
+    membersList.push(memberInfo);
+  }
+  return membersList;
+};
+
 module.exports.shortenURL = shortenURL;
 module.exports.preprocessHeading = preprocessHeading;
 module.exports.postprocessHeading = postprocessHeading;
@@ -218,3 +256,4 @@ module.exports.isFriends = isFriends;
 module.exports.makeFriends = makeFriends;
 module.exports.getMembersFromToken = getMembersFromToken;
 module.exports.getFilterParams = getFilterParams;
+module.exports.getMembers = getMembers;

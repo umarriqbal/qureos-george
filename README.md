@@ -2,6 +2,8 @@
 
 QureosGeorge is a basic experts directory application that supports scraping data from member's websites & links between them.
 
+This is a sample app to test NodeJS and ReactJS.
+
 ---
 
 ## Heroku
